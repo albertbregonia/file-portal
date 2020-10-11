@@ -21,7 +21,7 @@ As cloud storage services have been popularized and the lack of internet privacy
 5. Solely dependent on you and your peer's network speeds
 
 ## Installation:
-Please check the [`target`](https://github.com/albertbregonia/FilePortal/tree/master/target) folder then download and double-click `IFT-1.0.jar` to run.
+Please check the [`target`](https://github.com/albertbregonia/FilePortal/tree/master/target) folder then download and double-click `FilePortal-1.0.jar` to run.
 
 ***Note: If the jar does not run properly, also try running the jar file through command prompt/terminal with the following command:*** `java -jar <location of jar file>`
 
