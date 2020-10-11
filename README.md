@@ -3,7 +3,9 @@
 
 As cloud storage services have been popularized and the lack of internet privacy becoming an increasingly apparent threat, I designed this lightweight file transfer tool to aid against that.
 
-![Tool](https://github.com/albertbregonia/FilePortal/blob/master/src/main/resources/fp.png?raw=true "Tool")
+<p align="center">
+  <img title="Tool" src=https://github.com/albertbregonia/FilePortal/blob/master/src/main/resources/fp.png?raw=true></img>
+</p>
 
 **File Portal** is a simple, peer-to-peer, file transfer tool written in Java. It utilizes [JavaFX](https://openjfx.io/) for the GUI and the standard JavaIO and Java.Net APIs. It was designed to transfer files directly to a peer's computer as opposed to uploading to a cloud storage service and then having a peer download it.
 
