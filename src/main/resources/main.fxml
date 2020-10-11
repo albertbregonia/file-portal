@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="220.0" prefWidth="322.0" stylesheets="@main.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kanin.fileportal.Controller">
+   <children>
+      <Button fx:id="send" layoutX="14.0" layoutY="183.0" mnemonicParsing="false" onAction="#send" prefHeight="23.0" prefWidth="143.0" text="Send" />
+      <Button fx:id="select" layoutX="215.0" layoutY="75.0" mnemonicParsing="false" onAction="#setFile" prefHeight="23.0" prefWidth="71.0" text="Select" />
+      <Button fx:id="recv" layoutX="165.0" layoutY="183.0" mnemonicParsing="false" onAction="#recv" prefHeight="23.0" prefWidth="143.0" text="Receive" />
+      <Button fx:id="save" layoutX="215.0" layoutY="110.0" mnemonicParsing="false" onAction="#saveFile" prefHeight="23.0" prefWidth="71.0" text="Save" />
+      <TextField fx:id="fileDir" layoutX="55.0" layoutY="74.0" prefHeight="25.0" prefWidth="156.0" promptText="File" />
+      <TextField fx:id="ip" layoutX="55.0" layoutY="41.0" prefHeight="25.0" prefWidth="156.0" promptText="IP Address" />
+      <TextField fx:id="saveLocation" layoutX="55.0" layoutY="109.0" prefHeight="25.0" prefWidth="156.0" promptText="Save Location" />
+      <CheckBox fx:id="hostMode" layoutX="225.0" layoutY="45.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="51.0" text="Host" textFill="WHITE" />
+   </children>
+</AnchorPane>
