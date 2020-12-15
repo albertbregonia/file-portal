@@ -8,12 +8,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class Main extends Application 
-{
-    public static Stage mainWindow;
+public class Main extends Application {
+    
+    public static Stage mainWindow; //Static as opposed to using an accessor to prevent making a 'Main' object
+    
     @Override
-    public void start(Stage mainWindow) throws IOException //Main window GUI initialization
-    {
+    public void start(Stage mainWindow) throws IOException { //Main window GUI initialization 
         Main.mainWindow = mainWindow; //Pass by reference required for the file dialogs
         mainWindow.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("main.fxml")))));
         mainWindow.setResizable(false);

@@ -18,8 +18,8 @@ import java.net.Socket;
 public class Transfer extends Thread{
 
     //-----Networking-----//
-    private static Socket client;
-    private static ServerSocket host;
+    private Socket client;
+    private ServerSocket host;
     
     //-----Parameters-----//
     
@@ -38,9 +38,6 @@ public class Transfer extends Thread{
     private final Label progress = new Label();
     private final Stage fileStatus = new Stage();
     
-    //OS Directory delimiter format
-    private char dlm;
-    
     //I understand that I can simply overload the constructor, but that's very verbose
     public Transfer(Object type, Object file, CheckBox hostMode){
         if(type instanceof String) //If host mode is disabled, 'type' is an IP address
@@ -53,54 +50,62 @@ public class Transfer extends Thread{
             this.dir=(String)file;
         this.hostMode=hostMode;
         //OS Detection to format to file directory structure
-        dlm = System.getProperty("os.name").toLowerCase().contains("windows") ? '\\' : '/';
     }
 
     @Override
     public void run(){
-        try{ //Create server and wait for client
+        try { //Create server and wait for client
             if(hostMode.isSelected()){ 
                 host = new ServerSocket(54000);
                 client = host.accept();
                 if(sendFile!=null)
-                    Platform.runLater(()->{wait.close(); 
-                    showProgress("Sending ["+sendFile.getName()+"]");
-                });}
-            else{ //Connect to server
+                    Platform.runLater(()->{
+                        wait.close(); 
+                        showProgress("Sending ["+sendFile.getName()+"]");
+                });
+            }
+            else { //Connect to server
                 client = new Socket(validIP,54000);
                 if(sendFile!=null)
-                    Platform.runLater(()->showProgress("Sending ["+sendFile.getName()+"]"));}
+                    Platform.runLater(()->showProgress("Sending ["+sendFile.getName()+"]"));
+            }
             if(client!=null) //Initiate Transfer
                 if(sendFile!=null)
                     outgoing();
                 else if(dir!=null)
                     incoming();
-        }catch(IOException e){e.printStackTrace(); Platform.runLater(fileStatus::close); disconnect();}
+        } catch(IOException e){e.printStackTrace(); Platform.runLater(fileStatus::close); disconnect();}
     }
 
     public void outgoing() throws IOException{ //Sends the name and size of the file before the file contents
         PrintWriter send = new PrintWriter(client.getOutputStream(),true);
         send.println(sendFile.getName()+(char)127+sendFile.length());
-        transfer(new BufferedInputStream(new FileInputStream(sendFile)),new BufferedOutputStream(client.getOutputStream()), sendFile.length());
+        transfer(new BufferedInputStream(new FileInputStream(sendFile)), new BufferedOutputStream(client.getOutputStream()), sendFile.length());
     }
   
     public void incoming(){
         File data = null;
-        try{
+        try {
             BufferedReader input = new BufferedReader(new InputStreamReader(client.getInputStream()));
             String[] info = input.readLine().split(""+(char)127); //Reads in file name
-             data = new File(dir+dlm+info[0]);
+             data = new File(dir+"/"+info[0]);
             for(int i=0; data.exists(); i++) //Adjusts the file name if a file of the same name in the same directory exists
-                data = new File(dir+dlm+info[0].substring(0,info[0].lastIndexOf("."))+i+info[0].substring(info[0].indexOf(".")));
+                data = new File(dir+"/"+info[0].substring(0,info[0].lastIndexOf("."))+i+info[0].substring(info[0].indexOf(".")));
             Platform.runLater(()->{
-                if(wait!=null) wait.close();
-                showProgress("Receiving ["+info[0]+"]");});
+                if(wait!=null) 
+                    wait.close();
+                showProgress("Receiving ["+info[0]+"]");
+            });
             transfer(new BufferedInputStream(client.getInputStream()),new BufferedOutputStream(new FileOutputStream(data)),Long.parseLong(info[1])); //Last parameter is file size
-        }catch(IOException e){if(data!=null) data.delete();} //If the file transfer fails, the partially generated file is deleted
+        }
+        catch(IOException e) { //If the file transfer fails, the partially generated file is deleted
+            if (data != null)
+                data.delete();
+        }
     }
     
     public void transfer(BufferedInputStream in, BufferedOutputStream out, long size) throws IOException{
-        try{ //File Transfer - Either incoming or outgoing
+        try { //File Transfer - Either incoming or outgoing
             long start = System.currentTimeMillis();
             int amt; //length of read bytes
             double total=0; //total # of read bytes
@@ -115,7 +120,8 @@ public class Transfer extends Thread{
             Platform.runLater(()->{
                 fileStatus.close(); //If the file transfer was successful, display the elapsed time
                 Controller.alertMsg("File successfully transferred.","Elapsed time: "+(System.currentTimeMillis()-start)/1000+" seconds", Alert.AlertType.INFORMATION);
-            });}
+            });
+        }
         finally{ //Clean disconnect regardless of success
             in.close();
             out.close();
@@ -125,13 +131,14 @@ public class Transfer extends Thread{
 
     //Connections are severed for both parties upon successful/unsuccessful file transfer
     public void disconnect(){
-        try{
+        try {
             if(host!=null)
                 host.close();
             if(client!=null)
                 client.close();
-        }catch(IOException e){e.printStackTrace();}
-        finally{
+        }
+        catch(IOException e){e.printStackTrace();}
+        finally {
             host=null;
             client=null;
         }

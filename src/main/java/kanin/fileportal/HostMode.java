@@ -19,7 +19,7 @@ public class HostMode {
 
     public static void start(Object file, CheckBox hostMode){
         startup();
-        transfer = new Transfer(wait,file,hostMode);
+        transfer = new Transfer(wait, file, hostMode);
         transfer.start();
     }
     
@@ -31,7 +31,8 @@ public class HostMode {
         try {main = new Scene(FXMLLoader.load(Objects.requireNonNull(HostMode.class.getClassLoader().getResource("wait.fxml"))));}
         catch(IOException err){
             err.printStackTrace();
-            System.exit(0);}
+            System.exit(0);
+        }
         wait.setOnCloseRequest(e->cancel());
         wait.setScene(main);
         wait.isAlwaysOnTop();
@@ -40,14 +41,12 @@ public class HostMode {
 
     //-----Cancellation-----//
     @FXML
-    public void cancelConnect(){
-        //Hide dialog window
+    public void cancelConnect(){ //Hide dialog window
         wait.close();
         cancel();
     }
     
-    public static void cancel(){
-        //Abort live transfer
+    public static void cancel(){ //Abort live transfer
         if(transfer.isAlive())
             transfer.interrupt();
         transfer.disconnect();

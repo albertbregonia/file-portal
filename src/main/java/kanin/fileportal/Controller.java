@@ -19,7 +19,7 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle){}
     
     @FXML
-    private TextField ip,fileDir,saveLocation;
+    private TextField ip, fileDir, saveLocation;
     
     @FXML
     public void setFile(){
@@ -40,24 +40,20 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    //'Host Mode' denotes that this client is port forwarded 
-    // and will wait for a peer before sending/receiving a file
-    private CheckBox hostMode;
-    public static Transfer transfer;
+    private CheckBox hostMode; //'Host Mode' denotes that this client is port forwarded and will wait for a peer before sending/receiving a file
+    public static Transfer transfer; //Current file transfer thread
     
     @FXML
-    public void send() throws IOException{
-        //If the selected file is a valid file, *not a directory*,
-        //and the corresponding peer is accessible, send the file
-        File sendFile = new File(fileDir.getText().trim());
-        if(sendFile.exists() && !sendFile.isDirectory()){
+    public void send() throws IOException {
+        File sendFile = new File(fileDir.getText().trim()); //String is used to allow the user to type the file directory
+        if(sendFile.exists() && !sendFile.isDirectory()){ //If the selected file is a valid file, *not a directory*, and the corresponding peer is accessible, send the file
             if(alertMsg("Confirm outbound transfer of: \""+sendFile.getName()+"\"?","Please press OK to confirm.", Alert.AlertType.CONFIRMATION))
                 if(hostMode.isSelected())
                     HostMode.start(sendFile,hostMode);
                 else if(ip.getText().trim().length()>1 && InetAddress.getByName(ip.getText().trim()).isReachable(10000)){
-                    //File transfer thread is saved to a variable in order to allow for cancellation
-                    transfer = new Transfer(ip.getText().trim(),sendFile,hostMode);
-                    transfer.start();}
+                    transfer = new Transfer(ip.getText().trim(), sendFile, hostMode); //File transfer thread is saved to a variable in order to allow for cancellation
+                    transfer.start();
+                }
                 else
                     alertMsg("Error: Failed to establish connection","Please enter a valid IP Address or check your settings.", Alert.AlertType.ERROR);}
         else
@@ -65,16 +61,16 @@ public class Controller implements Initializable {
     }
     
     @FXML
-    public void recv() throws IOException{
-        //Ensure that the save directory is a valid location
-        File saveDir = new File(saveLocation.getText().trim());
+    public void recv() throws IOException {
+        File saveDir = new File(saveLocation.getText().trim()); //Ensure that the save directory is a valid location
         if(saveDir.exists() && saveDir.isDirectory()){
             if(alertMsg("Confirm inbound file transfer?","Please press OK to confirm.", Alert.AlertType.CONFIRMATION))
                 if(hostMode.isSelected())
                     HostMode.start(saveLocation.getText().trim(),hostMode);
                 else if(ip.getText().trim().length()>1 && InetAddress.getByName(ip.getText().trim()).isReachable(10000)){
-                    transfer = new Transfer(ip.getText().trim(),saveLocation.getText().trim(),hostMode);
-                    transfer.start();}
+                    transfer = new Transfer(ip.getText().trim(),saveLocation.getText().trim(), hostMode); //create a new transfer thread given an IP and hostMode setting
+                    transfer.start();
+                }
                 else
                     alertMsg("Error: Failed to establish connection","Please enter a valid IP Address or check your settings.", Alert.AlertType.ERROR);}
         else
@@ -87,8 +83,7 @@ public class Controller implements Initializable {
         alert.setTitle("File Portal by Albert Bregonia");
         alert.setHeaderText(content);
         Optional<ButtonType> result = alert.showAndWait();
-        //If the OK button is pressed return true
-        return result.filter(bt->bt==ButtonType.OK).isPresent();
+        return result.filter(bt->bt==ButtonType.OK).isPresent(); //If the OK button is pressed return true
     }
     
 }
