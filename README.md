@@ -9,12 +9,6 @@ As cloud storage services have been popularized and the lack of internet privacy
 
 **File Portal** is a simple, peer-to-peer, file transfer tool written in Java. It utilizes [JavaFX](https://openjfx.io/) for the GUI and the standard JavaIO and Java.Net APIs. It was designed to transfer files directly to a peer's computer as opposed to uploading to a cloud storage service and then having a peer download it.
 
-# Requirements
-- Understand the basic concepts of networking such as IP addresses and ports.
-- Know how to port forward or have a peer that knows how to port forward.
-- Understand that only 1 file can be sent at a time.
-- You must agree that I am ***NOT*** liable for any damage to anyone's system or any illegal activity. <ins>**ONLY use this tool with those you personally know and TRUST!**</ins>
-
 # Main Features
 1. Configurable to be a server or client.
 2. Easy to use GUI
@@ -26,6 +20,12 @@ As cloud storage services have been popularized and the lack of internet privacy
 Please check the [`target`](https://github.com/albertbregonia/File-Portal/tree/master/target) folder then download and double-click [`FilePortal-1.0.jar`](https://github.com/albertbregonia/File-Portal/blob/master/target/FilePortal-1.0.jar) to run.
 
 ***Note: If the jar does not run properly, also try running the jar file through command prompt/terminal with the following command:*** `java -jar <location of jar file>`
+
+# Requirements
+- Understand the basic concepts of networking such as IP addresses and ports.
+- Know how to port forward or have a peer that knows how to port forward.
+- Understand that only 1 file can be sent at a time.
+- You must agree that I am ***NOT*** liable for any damage to anyone's system or any illegal activity. <ins>**ONLY use this tool with those you personally know and TRUST!**</ins>
 
 # How to Use
 Decide between you and your peer who will be the `Host`. This person has to port forward their network on port `54000` unless both parties are on the same network.
