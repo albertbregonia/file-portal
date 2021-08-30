@@ -1,20 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="220.0" prefWidth="322.0" stylesheets="@main.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kanin.fileportal.Controller">
-   <children>
-      <Button fx:id="send" layoutX="14.0" layoutY="183.0" mnemonicParsing="false" onAction="#send" prefHeight="23.0" prefWidth="143.0" text="Send" />
-      <Button fx:id="select" layoutX="215.0" layoutY="75.0" mnemonicParsing="false" onAction="#setFile" prefHeight="23.0" prefWidth="71.0" text="Select" />
-      <Button fx:id="recv" layoutX="165.0" layoutY="183.0" mnemonicParsing="false" onAction="#recv" prefHeight="23.0" prefWidth="143.0" text="Receive" />
-      <Button fx:id="save" layoutX="215.0" layoutY="110.0" mnemonicParsing="false" onAction="#saveFile" prefHeight="23.0" prefWidth="71.0" text="Save" />
-      <TextField fx:id="fileDir" layoutX="55.0" layoutY="74.0" prefHeight="25.0" prefWidth="156.0" promptText="File" />
-      <TextField fx:id="ip" layoutX="55.0" layoutY="41.0" prefHeight="25.0" prefWidth="156.0" promptText="IP Address" />
-      <TextField fx:id="saveLocation" layoutX="55.0" layoutY="109.0" prefHeight="25.0" prefWidth="156.0" promptText="Save Location" />
-      <CheckBox fx:id="hostMode" layoutX="225.0" layoutY="45.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="51.0" text="Host" textFill="WHITE" />
-   </children>
-</AnchorPane>
+<SplitPane dividerPositions="0.5" prefHeight="332.0" prefWidth="726.0" stylesheets="@main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kanin.fileportal.Controller">
+   <items>
+      <AnchorPane prefWidth="373.0">
+         <children>
+            <GridPane fx:id="inputPanel" prefHeight="169.0" prefWidth="359.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="291.0" minWidth="10.0" prefWidth="268.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="315.0" minWidth="10.0" prefWidth="70.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <TextField fx:id="ipInput" prefHeight="25.0" prefWidth="200.0" promptText="IP Address">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="portInput" promptText="Port">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <GridPane.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </GridPane.margin>
+                  </HBox>
+                  <TextField fx:id="uploadPath" promptText="File" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="downloadPath" promptText="Save Location" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <CheckBox fx:id="hosting" mnemonicParsing="false" prefHeight="17.0" prefWidth="60.0" text="Host" textFill="#f3f3f3" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button fx:id="select" mnemonicParsing="false" onAction="#setFileToUpload" prefHeight="23.0" prefWidth="60.0" text="Select" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Button fx:id="save" mnemonicParsing="false" onAction="#setSaveLocation" prefHeight="23.0" prefWidth="60.0" text="Save" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+               </children>
+            </GridPane>
+            <HBox layoutX="119.0" layoutY="291.0" prefHeight="25.0" prefWidth="226.0">
+               <children>
+                  <Button fx:id="send" mnemonicParsing="false" onAction="#upload" prefHeight="23.0" prefWidth="160.0" text="Send">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="receive" mnemonicParsing="false" onAction="#download" prefHeight="23.0" prefWidth="160.0" text="Receive">
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <VBox fx:id="transferContainer" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" />
+   </items>
+</SplitPane>

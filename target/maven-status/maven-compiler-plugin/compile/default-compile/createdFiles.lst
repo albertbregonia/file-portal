@@ -1,5 +1,4 @@
-kanin\fileportal\HostMode.class
 kanin\fileportal\Main.class
-kanin\fileportal\Transfer.class
 kanin\fileportal\Controller.class
 kanin\fileportal\Launcher.class
+kanin\fileportal\FileTransferThread.class

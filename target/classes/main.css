@@ -1,12 +1,21 @@
 /*Basic Dark Theme, Blue-Accented */
 
-.root{-fx-background-color: #2d2d2d;}
-.label{-fx-text-fill: #f3f3f3;}
-.button
-{
+.root { 
+	-fx-background-color: #2d2d2d;
+    -fx-font-family: Verdana;
+}
+
+.button {
     -fx-background-color: #4081b3;
     -fx-text-fill: #f3f3f3;
-    -fx-font-family: Verdana;
     -fx-background-radius: 5%;
-    -fx-effect: dropshadow(gaussian, #141414, 8, 0, -2, 2)
+    -fx-effect: dropshadow(gaussian, #141414, 8, 0, 0, 2)
+}
+
+.transferThread, .transferThread VBox {
+	-fx-background-color: #2d2d2d;
+}
+
+Label {
+    -fx-text-fill: #f3f3f3;
 }
