@@ -13,10 +13,12 @@
 3. File transfer manager; users are able to pause/cancel transfers *(right click a drop down tab)*
 
 # Installation
+*Before downloading, you must agree that I am **NOT** liable for any damage to anyone's system or any illegal activity. **<ins>ONLY use this tool with those you personally know and TRUST!</ins>***
+
 Please check the [`target`](https://github.com/albertbregonia/File-Portal/tree/master/target) folder then download and double-click [`FilePortal-1.0.jar`](https://github.com/albertbregonia/File-Portal/blob/master/target/FilePortal-1.0.jar) to run.
 
 # Requirements
-- Minimum Java 8 Runtime
+- Java 8 Runtime or Higher
 - ~14 MB of Disk Space
 - *Optional:* Knowledge of Port Forwarding
 
