@@ -168,7 +168,7 @@ public class FileTransferThread extends Thread {
         BufferedReader input = new BufferedReader(new InputStreamReader(client.getInputStream()));
         String[] info = input.readLine().split("" + (char)28); //Reads in file name/size
         this.inboundFile = new File(directory + "/" + info[0]);
-        for(int i=0; this.inboundFile.exists(); i++) //Adjusts the file name if a file of the same name in the same directory exists
+        for(int i=0; !this.inboundFile.createNewFile(); i++) //Adjusts the file name if a file of the same name in the same directory exists
             this.inboundFile = new File(directory + "/" + info[0].substring(0, info[0].lastIndexOf(".")) + i + info[0].substring(info[0].indexOf(".")));
         statusUpdate(String.format("[CONFIRM] Receiving '%s'", inboundFile.getName()));
         this.pauseFlag = true; //by default incoming file transfers are paused as a pseudo confirm
@@ -187,7 +187,7 @@ public class FileTransferThread extends Thread {
             byte[] bin = new byte[10 * 1024 * 1024]; //maximum of 10MB is read per iteration
             while(true) //if we pause just have this thread idle
                 synchronized(this) {
-                    if(!pauseFlag)
+                    if(!pauseFlag) //pause flag is used because pausing this thread would also pause the connection
                         if((amt = in.read(bin)) > 0) {
                             out.write(bin, 0, amt);
                             out.flush();
