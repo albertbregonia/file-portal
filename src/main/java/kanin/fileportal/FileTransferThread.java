@@ -141,7 +141,11 @@ public class FileTransferThread extends Thread {
                 this.inboundFile.delete();
             if(!e.getMessage().equalsIgnoreCase("Socket closed") && !e.getMessage().equalsIgnoreCase("Connection reset by peer"))
                 Platform.runLater(() -> 
-                    alertMsg("Error: " + e.getMessage(), "Please enter a valid IP Address or check your settings.", Alert.AlertType.ERROR));
+                    alertMsg(
+                        "Error: " + e.getMessage(), 
+                        "Please enter a valid IP Address or check your settings.", 
+                        Alert.AlertType.ERROR
+                    ));
         } finally {
             disconnect();
             Platform.runLater(() -> Controller.transferList.getPanes().remove(this.infoCard));
@@ -168,8 +172,12 @@ public class FileTransferThread extends Thread {
         BufferedReader input = new BufferedReader(new InputStreamReader(client.getInputStream()));
         String[] info = input.readLine().split("" + (char)28); //Reads in file name/size
         this.inboundFile = new File(directory + "/" + info[0]);
+        int extensionIndex = info[0].lastIndexOf(".");
+        if(extensionIndex < 0) //if the file has no extension
+            extensionIndex = info[0].length();
         for(int i=0; !this.inboundFile.createNewFile(); i++) //Adjusts the file name if a file of the same name in the same directory exists
-            this.inboundFile = new File(directory + "/" + info[0].substring(0, info[0].lastIndexOf(".")) + i + info[0].substring(info[0].indexOf(".")));
+            this.inboundFile = 
+                new File(String.format("%s/%s%d%s", directory, info[0].substring(0, extensionIndex), i, info[0].substring(extensionIndex)));
         statusUpdate(String.format("[CONFIRM] Receiving '%s'", inboundFile.getName()));
         this.pauseFlag = true; //by default incoming file transfers are paused as a pseudo confirm
         this.infoCard.getContextMenu().getItems().get(0).setText("Confirm");

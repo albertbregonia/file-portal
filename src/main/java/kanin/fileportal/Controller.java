@@ -85,7 +85,11 @@ public class Controller implements Initializable {
                 else if(!ip.trim().isEmpty())
                     new FileTransferThread(file, port, ip).start();
                 else
-                    alertMsg("Error: Failed to establish connection", "Please enter a valid IP Address or check your settings.", Alert.AlertType.ERROR);
+                    alertMsg(
+                        "Error: Failed to establish connection", 
+                        "Please enter a valid IP Address or check your settings.", 
+                        Alert.AlertType.ERROR
+                    );
         } else
             alertMsg(fileErrorMsgs[0], fileErrorMsgs[1], Alert.AlertType.ERROR);
     }
