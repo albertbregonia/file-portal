@@ -55,7 +55,7 @@ public class FileTransferThread extends Thread {
         MenuItem pause = new MenuItem("Pause"),
                  cancel = new MenuItem("Cancel");
         pause.setOnAction(e -> { //toggle pause
-            if(this.client != null) {
+            if(this.client != null)
                 if(pause.getText().equalsIgnoreCase("Pause")) {
                     this.pauseFlag = true;
                     pause.setText("Resume");
@@ -71,7 +71,6 @@ public class FileTransferThread extends Thread {
                     else
                         statusUpdate(String.format("Receiving '%s'", inboundFile.getName()));
                 }
-            }
         });
         cancel.setOnAction(e -> {
             Controller.transferList.getPanes().remove(this.infoCard);
